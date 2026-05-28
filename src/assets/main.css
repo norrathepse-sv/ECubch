@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* กำหนดโทนสีกรมท่า (Primary) */
+  --color-navy: #0f172a;
+  --color-navy-light: #1e293b;
+  --color-navy-dark: #020617;
+  
+  /* กำหนดโทนสีเหลืองทอง (Secondary) */
+  --color-gold: #eab308;
+  --color-gold-hover: #ca8a04;
+  --color-gold-light: #fef08a;
+
+  /* บังคับใช้ฟอนต์สารบรรณหรือพร้อมต์สำหรับงานราชการ */
+ --font-sans: "Prompt", sans-serif;
+/* --- เพิ่มส่วนนี้สำหรับการทำ Motion --- */
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+  --animate-fade-in: fade-in 1s ease-out forwards;
+  
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  --animate-slide-in-left: slide-in-left 1s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 1s ease-out forwards;
+
+  @keyframes slide-in-left {
+    0% { opacity: 0; transform: translateX(-80px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes slide-in-right {
+    0% { opacity: 0; transform: translateX(80px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #f8fafc; /* พื้นหลังสีเทาอ่อน (slate-50) */
+}
+/* ล้างสไตล์เริ่มต้นของเบราว์เซอร์เพื่อให้แสดงผลเต็มหน้าจอ */
+#app {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
