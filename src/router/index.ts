@@ -10,13 +10,26 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/about/app-object-second',
+      name: 'app-object-second',
+      component: () => import('@/views/about/AppOjectSecond.vue')
     },
+    {
+      path: '/about/app-org-chart',
+      name: 'app-org-chart',
+      component: () => import('@/views/about/AppOrgChart.vue')
+    },
+    {
+      path: '/meeting/app-meeting-list',
+      name: 'app-meeting-list',
+      component: () => import('@/views/meeting/AppMeeting.vue')
+    },
+    // เพิ่มหน้า Login ไว้ตรงนี้
+    // {
+    //   path: '/login',
+    //   name: 'login',
+    //   component: () => import('@/views/LoginView.vue') 
+    // }
   ],
 })
 
