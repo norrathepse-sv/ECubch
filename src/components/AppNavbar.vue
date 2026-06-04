@@ -71,7 +71,7 @@
         <router-link to="/procedures" class="hover:text-gold transition">
           ขั้นตอนการดำเนินงาน
         </router-link>
-        <router-link to="/contact" class="hover:text-gold transition">
+        <router-link to="/app-contact-view" class="hover:text-gold transition">
           ติดต่อเรา
         </router-link>
         <router-link to="/login" class="bg-gold hover:bg-gold-hover text-navy px-5 py-2 rounded font-bold transition shadow-md">
@@ -116,7 +116,7 @@
         <router-link to="/procedures" @click="closeMenu" class="hover:text-gold transition">
           ขั้นตอนการดำเนินงาน
         </router-link>
-        <router-link to="/contact" @click="closeMenu" class="hover:text-gold transition">
+        <router-link to="/app-contact-view" @click="closeMenu" class="hover:text-gold transition">
           ติดต่อเรา
         </router-link>
         <router-link to="/login" @click="closeMenu" class="bg-gold text-navy py-2 rounded font-bold text-center mt-2 shadow-md">

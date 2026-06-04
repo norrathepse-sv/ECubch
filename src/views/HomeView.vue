@@ -3,10 +3,11 @@
     <AppHero />
     <ImageSlider :slides="heroSlides" :auto-play-interval="6000" />
     <AppAbout />
-    <AppSop />
-    <AppFee />
-    <AppDownload />
+
     <AppExperts />
+    <!-- <AppSop /> -->
+    <AppFee />
+    <!-- <AppDownload /> -->
   </div>
 </template>
 
@@ -14,10 +15,10 @@
 import { ref } from 'vue';
 import AppHero from '@/components/AppHero.vue';
 import AppAbout from '@/components/AppAbout.vue';
-import AppSop from '@/components/AppSop.vue';
+// import AppSop from '@/components/AppSop.vue';
 import AppFee from '@/components/AppFee.vue';
 import AppExperts from '@/components/AppExperts.vue';
-import AppDownload from '@/components/AppDownload.vue';
+// import AppDownload from '@/components/AppDownload.vue';
 
 import ImageSlider from '@/components/ImageSlider.vue';
 

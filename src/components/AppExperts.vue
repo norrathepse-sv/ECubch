@@ -1,40 +1,58 @@
 <template>
-  <section class="py-20 bg-white">
-    <div class="container mx-auto px-6 text-center">
-      <span class="text-xs font-bold uppercase tracking-widest text-gold bg-navy px-3 py-1 rounded-full">Meet The Experts</span>
-      <h3 class="text-3xl font-extrabold text-navy mt-4 mb-12">คณะกรรมการจริยธรรมของเรา</h3>
+  <div class=" py-6 px-4 md:px-6">
+    <div class="max-w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div v-for="member in members" :key="member.id" class="group">
-          <div class="aspect-[3/4] bg-slate-100 rounded-xl overflow-hidden mb-3 border border-slate-200 group-hover:shadow-md transition">
-            <div class="w-full h-full bg-slate-200 flex items-center justify-center text-slate-400">👤 ภาพถ่าย</div>
-          </div>
-          <h4 class="font-bold text-navy text-sm">{{ member.name }}</h4>
-          <p class="text-xs text-slate-500 mt-0.5">{{ member.role }}</p>
-        </div>
-      </div>
+      <GridCard 
+        title="ผลงานวิจัย"
+        subtitle="รวมผลงานจากงานวิจัยที่ผ่านการรับรองจริยธรรมจากคณะกรรมการจริยธรรมการวิจัยในมนุษย์ โรงพยาบาลมะเร็งอุบลราชธานี"
+        bg-color="bg-[#f5f5f7]"
+        text-color="text-[#1d1d1f]"
+      >
+        <template #visual>
+          <!-- <img src="/images/your-mac-ipad.png" class="mx-auto w-[80%] hover:translate-y-[-10px] transition-transform duration-500" /> -->
+        </template>
+      </GridCard>
 
-      <div class="mt-12 bg-navy text-white p-8 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 text-left">
-        <div>
-          <h4 class="text-xl font-bold">เริ่มต้นโครงการวิจัยของคุณวันนี้</h4>
-          <p class="text-xs text-slate-400 mt-1">ยื่นคำขอรับรองทางระบบจริยธรรมออนไลน์ได้ทันที ตลอด 24 ชั่วโมง</p>
-        </div>
-        <button class="bg-gold hover:bg-gold-hover text-navy font-bold py-3 px-6 rounded text-sm transition shrink-0 shadow-md">
-          ส่งโครงการวิจัยเพื่อพิจารณา
-        </button>
-      </div>
+      <GridCard 
+        title="ดาวน์โหลดเอกสาร"
+        subtitle="เอกสารที่เกี่ยวข้องกับการรับรองจริยธรรมการวิจัยในมนุษย์ โรงพยาบาลมะเร็งอุบลราชธานี"
+        bg-color="bg-[#f5f5f7]"
+        text-color="text-[#1d1d1f]"
+       
+      >
+        <template #visual>
+          <!-- <img src="/images/macbook-neo.png" class="mx-auto w-[80%]" /> -->
+        </template>
+      </GridCard>
+
+      <GridCard 
+        title="มาตรฐานการปฏิบัติงาน"
+        subtitle="(Standard Operating Procedures) ฉบับที่ 3"
+        bg-color="bg-gradient-to-br from-[#d1e7f3] to-[#b3d7ee]"
+        text-color="text-[#1d1d1f]"
+        :has-secondary-btn="true"
+      >
+        <template #visual>
+          <img src="/images/sops/SOPs.png" class="mx-auto w-[25%]" />
+        </template>
+      </GridCard>
+
+      <GridCard 
+        title="MacBook Pro"
+        subtitle="วันนี้มาพร้อมชิป M5, M5 Pro และ M5 Max"
+        bg-color="bg-[#000000]"
+        text-color="text-[#ffffff]"
+        :has-secondary-btn="true"
+      >
+        <template #visual>
+          <!-- <img src="/images/macbook-pro.png" class="mx-auto w-[80%]" /> -->
+        </template>
+      </GridCard>
 
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
-import type { CommitteeMember } from '@/types';
-
-const members: CommitteeMember[] = [
-  { id: 1, name: 'ศ.ดร.นพ. สมชาย รักดี', role: 'ประธานคณะกรรมการ' },
-  { id: 2, name: 'ดร.ญ. สมศรี เรียนรู้', role: 'รองประธานคณะกรรมการ' },
-  { id: 3, name: 'นพ. วิชัย เก่งกาจ', role: 'กรรมการผู้ทรงคุณวุฒิ' },
-  { id: 4, name: 'ภญ. พรทิพย์ สุขใจ', role: 'เลขานุการคณะกรรมการ' },
-];
+import GridCard from '@/components/GridCard.vue';
 </script>

@@ -24,6 +24,16 @@ const router = createRouter({
       name: 'app-meeting-list',
       component: () => import('@/views/meeting/AppMeeting.vue')
     },
+    {
+      path: '/app-contact-view',
+      name: 'app-contact-view',
+      component: () => import('@/views/ContactView.vue')
+    },
+     {
+      path: '/app-project-status',
+      name: 'app-project-status',
+      component: () => import('@/components/ProjectStatusView.vue')
+    },
     // เพิ่มหน้า Login ไว้ตรงนี้
     // {
     //   path: '/login',

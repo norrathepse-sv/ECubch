@@ -1,5 +1,5 @@
 <template>
-  <section class="py-24 bg-slate-50 relative overflow-hidden font-sans">
+  <section class="bg-gradient-to-b from-[#e1f5fe] via-[#f5f9fc] to-white py-24  bg-slate-50 relative overflow-hidden font-sans">
     
     <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-navy/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -7,10 +7,10 @@
     <div class="container mx-auto px-6 max-w-6xl relative z-10">
       
       <div class="text-center mb-16 animate-fade-in-up">
-        <span class="inline-block px-4 py-1 bg-navy/10 text-navy font-bold uppercase tracking-widest rounded-full mb-4 text-xs">
+        <!-- <span class="inline-block px-4 py-1 bg-navy/10 text-navy font-bold uppercase tracking-widest rounded-full mb-4 text-xs">
           Fee & Payment
-        </span>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-navy mb-4">หลักเกณฑ์และอัตราการเก็บค่าธรรมเนียม</h2>
+        </span> -->
+        <h2 class="text-4xl md:text-5xl font-semibold text-navy mb-4">หลักเกณฑ์และอัตราการเก็บค่าธรรมเนียม</h2>
         <p class="text-slate-500">การพิจารณารับรองจริยธรรมวิจัยในมนุษย์ โรงพยาบาลมะเร็งอุบลราชธานี</p>
       </div>
 
