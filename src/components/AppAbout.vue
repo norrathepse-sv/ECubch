@@ -5,24 +5,27 @@
       <!-- <h2 class="text-sm font-semibold tracking-widest text-[#0071e3] uppercase mb-4">
         เกี่ยวกับหน่วยงาน
       </h2> -->
-      <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-        ทำดีที่สุด <br class="hidden md:block" />เพื่อทุกชีวิต.
+      <!-- <section class="max-w-xl mx-auto px-4 pb-12 relative">
+        <div class="flex items-center justify-center gap-6 w-full h-auto py-6"> 
+          
+          <img src="/images/Seal_of_the_Department_of_Medical_services.svg.png" alt="Department of Medical Services" class="w-1/2 max-h-56 object-contain" />
+          <img src="/images/logoUBCH.png" alt="UBCH Hospital" class="w-1/2 max-h-62 object-contain" />
+          
+        </div>
+      </section> -->
+      <h1 class="text-5xl md:text-7xl font-semibold text-navy tracking-tight mb-6 leading-tight">
+        ทำดีที่สุดเพื่อทุกชีวิต.
       </h1>
-      <p class="text-xl md:text-2xl text-slate-600 font-normal max-w-2xl mx-auto mb-10 leading-relaxed">
+      <p class="text-xl md:text-2xl text-slate-600 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
         ดำเนินการพิจารณาตามมาตรฐานสากล พร้อมทีมผู้เชี่ยวชาญให้คำปรึกษาและคำแนะนำตลอดกระบวนการ
       </p>
       
       <div class="flex flex-col sm:flex-row gap-4 items-center">
         <AppUbchEC001/>
-         <ProjectStatusView/>
+        <ProjectStatusView/>
       </div>
     </section>
-
-    <!-- <section class="max-w-4xl mx-auto px-4 pb-24 relative">
-      <div class="relative w-full aspect-video rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50 bg-white">
-        <img src="/images/S__61792260.jpg" alt="UBCH Hospital" class="w-full h-full object-cover" />
-      </div>
-    </section> -->
+    
 
   </div>
 </template>

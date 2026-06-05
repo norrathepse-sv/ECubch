@@ -1,9 +1,9 @@
 <template>
   <button 
     @click="isPdfOpen = true"
-    class="bg-[#0071e3] hover:bg-[#0077ED] text-white text-base font-normal py-3 px-8 rounded-full transition-colors"
+    class="bg-[#0071e3] hover:bg-[#0077ED] text-white text-base  md:text-xl font-light py-3 px-8 rounded-full transition-colors hover:cursor-pointer group flex items-center"
   >
-    ขั้นตอนการขอรับรอง
+    ขั้นตอนการขอจริยธรรมการวิจัยในมนุษย์
   </button>
 
   <Teleport to="body">

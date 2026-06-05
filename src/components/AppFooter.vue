@@ -17,15 +17,18 @@
         <ul class="space-y-2.5">
           <li><a href="#" class="hover:text-white transition">📄 ดาวน์โหลดแบบฟอร์ม</a></li>
           <li><a href="#" class="hover:text-white transition">🗓️ ตารางการประชุมประจำปี</a></li>
-          <li><a href="#" class="hover:text-white transition">⚖️ ข้อบังคับและกฎหมายที่เกี่ยวข้อง</a></li>
+          <li><a href="#" class="hover:text-white transition">⚖️ ขั้นตอนการดำเนินงาน</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="text-white font-bold mb-4 text-sm border-l-2 border-gold pl-2">ที่อยู่หน่วยงาน</h4>
         <p class="leading-relaxed text-slate-500">
-          145 ถนนคลังอาวุธ ตำบลขามใหญ่ <br>
-          อำเภอเมือง จังหวัดอุบลราชธานี 34000
+          โรงพยาบาลมะเร็งอุบลราชธานี <br>
+          405 ถนนคลังอาวุธ ตำบลขามใหญ่ <br>
+          อำเภอเมือง จังหวัดอุบลราชธานี 34000<br>
+          โทรศัพท์: 045-319671 ถึง 3
+          ต่อ 7702
         </p>
       </div>
 
@@ -33,7 +36,7 @@
         <h4 class="text-white font-bold mb-4 text-sm border-l-2 border-gold pl-2">วัน-เวลาทำการ</h4>
         <p class="leading-relaxed text-slate-500">
           วันจันทร์ - วันศุกร์ <br>
-          เวลา 08:30 น. - 16:30 น. <br>
+          เวลา 08:00 น. - 16:00 น. <br>
           (ยกเว้นวันหยุดนักขัตฤกษ์)
         </p>
       </div>

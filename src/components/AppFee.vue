@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-gradient-to-b from-[#e1f5fe] via-[#f5f9fc] to-white py-24  bg-slate-50 relative overflow-hidden font-sans">
+  <section class="bg-gradient-to-br from-[#d1e7f3] to-[#fffff]  py-24  relative overflow-hidden font-sans">
     
     <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-navy/5 rounded-full blur-[120px] pointer-events-none"></div>

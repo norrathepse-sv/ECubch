@@ -110,7 +110,7 @@ interface ContactMethod {
 const contactMethods: ContactMethod[] = [
   {
     title: 'โทรศัพท์',
-    detail: '045-319671 ถึง 3<br/>ต่อ 7083 หรือ 7894', // ใส่เบอร์จริงที่นี่
+    detail: '045-319671 ถึง 3<br/>ต่อ 7720', // ใส่เบอร์จริงที่นี่
     icon: PhoneIcon,
     actionText: 'โทรทันที',
     actionUrl: 'tel:045319671'

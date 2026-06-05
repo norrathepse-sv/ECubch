@@ -1,20 +1,16 @@
 <template>
   <nav class="absolute top-0 left-0 w-full z-50 bg-navy backdrop-blur-md border-b border-white/10 text-white">
-    <div class="container mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
+<div class="container mx-auto px-6 py-4 flex justify-between items-center relative">
       
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 bg-white/20 rounded-md flex items-center justify-center text-[10px]">
+      <div class="flex items-center gap-3 z-20">
+        <!-- <div class="w-12 h-12 bg-white/20 rounded-md flex items-center justify-center text-[10px]">
           <img src="/images/logoUBCH.png" alt="UBCH Logo" class="w-full h-full object-contain">
-        </div>
-        <div class="leading-tight hidden sm:block">
-          <h1 class="text-md font-bold tracking-wide">คณะกรรมการจริยธรรมการวิจัยในมนุษย์</h1>
-          <p class="text-[14px] text-slate-300">โรงพยาบาลมะเร็งอุบลราชธานี</p>
-        </div>
+        </div> -->
       </div>
       
       <button 
         @click="toggleMenu" 
-        class="lg:hidden text-white hover:text-gold focus:outline-none transition"
+        class="lg:hidden text-white hover:text-gold focus:outline-none transition z-20"
       >
         <svg v-if="!isMenuOpen" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -24,7 +20,8 @@
         </svg>
       </button>
 
-      <div class="hidden lg:flex items-center gap-6 text-md font-medium">
+      <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-md font-medium z-10 w-max">
+        
         <router-link to="/" class="text-gold border-b-2 border-gold pb-1 hover:text-gold transition">
           หน้าแรก
         </router-link>
@@ -37,9 +34,6 @@
             </svg>
           </div>
           <div class="absolute left-0 top-full mt-0 w-max bg-white text-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 overflow-hidden">
-            <!-- <router-link to="/about/history" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition">
-              ประวัติความเป็นมา
-            </router-link> -->
             <router-link to="/about/app-org-chart" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition border-t border-slate-100">
               โครงสร้างการบริหารภายในโรงพยาบาลมะเร็งอุบลราชธานี
             </router-link>
@@ -49,7 +43,7 @@
           </div>
         </div>
         
-               <div class="relative group cursor-pointer py-2">
+        <div class="relative group cursor-pointer py-2">
           <div class="flex items-center gap-1 hover:text-gold transition">
             มาตรฐานงานวิจัย
             <svg class="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,27 +51,27 @@
             </svg>
           </div>
           <div class="absolute left-0 top-full mt-0 w-max bg-white text-slate-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-2 transition-all duration-300 overflow-hidden">
-            <!-- <router-link to="/about/history" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition">
-              ประวัติความเป็นมา
-            </router-link> -->
-            <router-link to="/about/app-org-chart" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition border-t border-slate-100">
+            <!-- <router-link to="/about/app-org-chart" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition border-t border-slate-100">
               SOPs
-            </router-link>
+            </router-link> -->
             <router-link to="/meeting/app-meeting-list" class="block px-4 py-2 whitespace-nowrap hover:bg-slate-100 hover:text-gold transition border-t border-slate-100">
               กำหนดการประชุมคณะกรรมการฯ
             </router-link>
           </div>
         </div>
-        <router-link to="/procedures" class="hover:text-gold transition">
-          ขั้นตอนการดำเนินงาน
-        </router-link>
+        
         <router-link to="/app-contact-view" class="hover:text-gold transition">
           ติดต่อเรา
         </router-link>
+        
+      </div>
+
+      <div class="hidden lg:block z-20">
         <router-link to="/login" class="bg-gold hover:bg-gold-hover text-navy px-5 py-2 rounded font-bold transition shadow-md">
           Login
         </router-link>
       </div>
+
     </div>
 
     <div 

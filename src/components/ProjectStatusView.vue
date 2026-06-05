@@ -2,8 +2,8 @@
   <div class="font-sans">
     <button 
       @click="isModalOpen = true"
-      class="group inline-flex items-center text-[17px] text-[#0071e3] font-medium bg-[#f2f6f9] py-2 px-4 rounded-lg hover:bg-[#e6f0f7] transition-colors"
-    >
+      class="bg-transparent border border-[#0077ED] text-[#0071e3] hover:bg-[#0077ED] hover:text-white text-base md:text-xl font-light py-3 px-8 rounded-full transition-colors hover:cursor-pointer group flex items-center"
+>
       ตรวจสอบสถานะโครงการที่ยื่นรับรอง
       <span class="ml-1.5 text-xl leading-none group-hover:translate-x-0.5 transition-transform">›</span>
     </button>

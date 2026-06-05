@@ -1,28 +1,34 @@
 <template>
-  <div class="relative bg-navy text-white min-h-[400px] md:min-h-[500px] flex items-center justify-center overflow-hidden pt-20">
+  <div class="relative w-full mt-16 md:mt-14">
     
-    <div 
-      class="absolute inset-0 bg-cover bg-center animate-fade-in" 
-      style="background-image: url('/images/S__61792260.jpg');">
+    <div class="w-full bg-[#1d1d1f] text-[#f5f5f7] text-xs md:text-sm py-2 px-4 flex justify-center items-center text-center z-50">
+      <p class="font-light tracking-wide">
+       คณะกรรมการจริยธรรมการวิจัยในมนุษย์
+
+        <a href="https://uboncancer.go.th" class="text-[#2997ff] hover:underline">โรงพยาบาลมะเร็งอุบลราชธานี</a> 
+      </p>
     </div>
     
-    <div class="absolute inset-0 bg-navy/75 mix-blend-multiply"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-transparent to-navy-dark/30"></div>
-<!-- 
-    <div class="absolute top-24 right-6 md:top-32 md:right-12 z-20 flex gap-4 animate-fade-in-up">
-      <div class="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white hover:scale-105 transition-transform duration-300 p-2 md:p-3 cursor-pointer">
-        <img src="/images/Seal_of_the_Department_of_Medical_services.svg.png" alt="โลโก้กระทรวงสาธารณสุข" class="w-full h-full object-contain">
-      </div>
-      <div class="w-16 h-16 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center shadow-lg border-2 border-white hover:scale-105 transition-transform duration-300 p-2 md:p-3 cursor-pointer">
-        <img src="/images/logoUBCH.png" alt="โลโก้โรงพยาบาลมะเร็งอุบลราชธานี" class="w-full h-full object-contain">
-      </div>
-    </div> -->
+<div class="relative bg-navy text-white min-h-[200px] md:min-h-[600px] flex items-center justify-center overflow-hidden pt-0">
+      
+      <video 
+        autoplay 
+        loop 
+        muted 
+        playsinline
+        class="absolute w-full h-full object-cover object-center z-0 animate-fade-in"
+      >
+        <source src="/Videos/footage3.mp4" type="video/mp4" />
+      </video>
+      
+      <div class="absolute inset-0 bg-navy/75 mix-blend-multiply z-10"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/90 via-transparent to-navy-dark/30 z-10"></div>
 
-    <!-- <div class="relative z-10 text-center px-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-      <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold tracking-wide drop-shadow-lg">
-        เราจะ <span class="text-white">"ทำดีที่สุด เพื่อ ทุกชีวิต"</span>
-      </h2>
-    </div> -->
+      <div class="absolute top-0 left-0 p-6 z-20">
+        <img src="/images/logoUBCH.png" alt="UBCH Logo" class="w-[80px] md:w-[120px] h-auto" />
+      </div>
 
+</div>
+    
   </div>
 </template>
