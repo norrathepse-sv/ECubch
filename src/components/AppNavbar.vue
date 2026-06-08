@@ -1,5 +1,5 @@
 <template>
-  <nav class="absolute top-0 left-0 w-full z-50 bg-navy backdrop-blur-md border-b border-white/10 text-white">
+  <nav class="w-full z-50  bg-navy backdrop-blur-md border-b border-white/10 text-white">
 <div class="container mx-auto px-6 py-4 flex justify-between items-center relative">
       
       <div class="flex items-center gap-3 z-20">
@@ -20,7 +20,7 @@
         </svg>
       </button>
 
-      <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-md font-medium z-10 w-max">
+      <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-sm font-thin z-10 w-max">
         
         <router-link to="/" class="text-gold border-b-2 border-gold pb-1 hover:text-gold transition">
           หน้าแรก

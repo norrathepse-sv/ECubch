@@ -29,17 +29,40 @@ const router = createRouter({
       name: 'app-contact-view',
       component: () => import('@/views/ContactView.vue')
     },
-     {
+    {
       path: '/app-project-status',
       name: 'app-project-status',
       component: () => import('@/components/ProjectStatusView.vue')
     },
-    // เพิ่มหน้า Login ไว้ตรงนี้
-    // {
-    //   path: '/login',
-    //   name: 'login',
-    //   component: () => import('@/views/LoginView.vue') 
-    // }
+    
+    // ==========================================
+    // เพิ่ม Routes ใหม่สำหรับ GridCard ด้านล่างนี้
+    // ==========================================
+    {
+      path: '/research',
+      name: 'research-directory',
+      // อย่าลืมสร้างไฟล์ ResearchView.vue (หรือชื่ออื่นที่คุณตั้งไว้) ในโฟลเดอร์ views
+      component: () => import('@/views/research/researchData.vue') 
+    },
+    {
+      path: '/downloads',
+      name: 'document-downloads',
+      component: () => import('@/views/downloads/DownloadsView.vue')
+    },
+   {
+  path: '/login',
+  name: 'login',
+  component: () => import('@/views/LoginView.vue')
+}
+  ,
+   {
+  path: '/login/success',
+  name: 'login-success',
+  component: () => import('@/views/LoginSuccess.vue')
+}
+
+    
+      
   ],
 })
 

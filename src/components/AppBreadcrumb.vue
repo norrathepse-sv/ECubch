@@ -17,7 +17,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
           </svg>
 
-          <span v-if="index === items.length - 1" class="ml-1 md:ml-2 text-purple-700 font-semibold drop-shadow-sm">
+          <span v-if="index === items.length - 1" class="ml-1 md:ml-2 text-gray-600 font-semibold drop-shadow-sm">
             {{ item.name }}
           </span>
 
@@ -35,11 +35,11 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // รับข้อมูล (Props) จากหน้าต่างๆ
 defineProps({
   items: {
-    type: Array,
+    type: Array as () => { name: string; path?: string }[],
     required: true,
     default: () => []
   }

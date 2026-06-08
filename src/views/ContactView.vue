@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white font-sans text-[#1d1d1f] min-h-screen pb-24 pt-32">
+  <div class="bg-white font-sans text-[#1d1d1f] p-6">
      <AppBreadcrumb :items="breadcrumbList" />
     <div class="max-w-[980px] mx-auto px-4 md:px-6 pt-20 pb-16 text-center">
       <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight">

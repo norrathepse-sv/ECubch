@@ -14,7 +14,7 @@
         </div>
       </section> -->
       <h1 class="text-5xl md:text-7xl font-semibold text-navy tracking-tight mb-6 leading-tight">
-        ทำดีที่สุดเพื่อทุกชีวิต.
+       " เราจะทำดีที่สุด เพื่อทุกชีวิต "
       </h1>
       <p class="text-xl md:text-2xl text-slate-600 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
         ดำเนินการพิจารณาตามมาตรฐานสากล พร้อมทีมผู้เชี่ยวชาญให้คำปรึกษาและคำแนะนำตลอดกระบวนการ

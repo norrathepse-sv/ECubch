@@ -1,14 +1,7 @@
 <template>
-  <div class="relative w-full mt-16 md:mt-14">
+  <div class="relative w-full ">
     
-    <div class="w-full bg-[#1d1d1f] text-[#f5f5f7] text-xs md:text-sm py-2 px-4 flex justify-center items-center text-center z-50">
-      <p class="font-light tracking-wide">
-       คณะกรรมการจริยธรรมการวิจัยในมนุษย์
 
-        <a href="https://uboncancer.go.th" class="text-[#2997ff] hover:underline">โรงพยาบาลมะเร็งอุบลราชธานี</a> 
-      </p>
-    </div>
-    
 <div class="relative bg-navy text-white min-h-[200px] md:min-h-[600px] flex items-center justify-center overflow-hidden pt-0">
       
       <video 

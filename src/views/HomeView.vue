@@ -1,12 +1,11 @@
 <template>
   <div class="w-full">
     <AppHero />
-    <div class="space-y-2.5">
-      <AppAbout />
-      <AppFee />
-    </div>
-    <div class="space-y-2 ">
+    <AppAbout />
+    
+    <div class="space-y-4 md:space-y-6 lg:space-y-8 mb-16">
       <AppExperts />
+      <AppFee />
     </div>
     
     <!-- <AppSop /> -->
