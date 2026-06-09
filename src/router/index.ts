@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  
   routes: [
     {
       path: '/',
@@ -35,13 +36,11 @@ const router = createRouter({
       component: () => import('@/components/ProjectStatusView.vue')
     },
     
-    // ==========================================
-    // เพิ่ม Routes ใหม่สำหรับ GridCard ด้านล่างนี้
-    // ==========================================
+
     {
       path: '/research',
       name: 'research-directory',
-      // อย่าลืมสร้างไฟล์ ResearchView.vue (หรือชื่ออื่นที่คุณตั้งไว้) ในโฟลเดอร์ views
+      
       component: () => import('@/views/research/researchData.vue') 
     },
     {
@@ -59,11 +58,19 @@ const router = createRouter({
   path: '/login/success',
   name: 'login-success',
   component: () => import('@/views/LoginSuccess.vue')
+},
+{
+  path:'/dashboard',
+  name:'dashboard',
+  component: () => import('@/views/DashboardView.vue')
 }
-
-    
+  
       
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }; // บังคับให้เริ่มที่ด้านบนเสมอ
+  },
+  
 })
 
 export default router

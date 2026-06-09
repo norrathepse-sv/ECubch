@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-4xl mx-auto bg-white shadow-lg border border-slate-200 my-8 overflow-hidden text-slate-800 font-sans">
+  <div class="max-w-5xl mx-auto bg-white shadow-lg border border-slate-200 my-8 overflow-hidden text-slate-800 font-sans">
     
-    <div class="bg-[#005b5c] text-white px-4 py-1.5 text-[12px] sm:text-[14px] font-semibold">
+    <div class="bg-gray-800 text-white px-4 py-1.5 text-[12px] sm:text-[14px] font-semibold">
       UBCH EC 005/2022 ตารางการประชุมคณะกรรมการจริยธรรมการวิจัยในมนุษย์ โรงพยาบาลมะเร็งอุบลราชธานี
     </div>
 
@@ -15,7 +15,7 @@
       <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 mb-8 text-center">
         <div class="flex items-center gap-4">
           <img src="/images/Seal_of_the_Department_of_Medical_services.svg.png" alt="กระทรวงสาธารณสุข" class="w-20 h-20 object-contain">
-          <img src="/images/logoUBCH.png" alt="UBCH" class="w-20 h-20 object-contain">
+          <img src="/images/logoUBCH.png" alt="UBCH" class="w-25 h-24 object-contain">
         </div>
         
         <div class="font-bold text-lg leading-relaxed">
@@ -70,9 +70,10 @@ interface Props {
   scheduleData: Meeting[];       // ข้อมูลตารางการประชุม
 }
 
+
 // กำหนดค่าเริ่มต้น (Default Props) ในกรณีที่ไม่ได้ส่งค่ามา
 withDefaults(defineProps<Props>(), {
-  year: '2568',
+  year: 'currentYear', // ใช้ปีปัจจุบันเป็นค่าเริ่มต้น
   frequencyText: 'ทุก ๆ 2 เดือน',
   scheduleData: () => []
 });

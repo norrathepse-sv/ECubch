@@ -22,7 +22,7 @@
       
       <div class="flex flex-col sm:flex-row gap-4 items-center">
         <AppUbchEC001/>
-        <ProjectStatusView/>
+        <!-- <ProjectStatusView/> -->
       </div>
     </section>
     
@@ -32,6 +32,6 @@
 
 <script setup lang="ts">
 
-import ProjectStatusView from '@/components/ProjectStatusView.vue';
+// import ProjectStatusView from '@/components/ProjectStatusView.vue';
 import AppUbchEC001 from './AppUbchEC001.vue';
 </script>
