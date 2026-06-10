@@ -128,6 +128,14 @@
             />
             <span class="text-sm font-medium">{{ userData.name }}</span>
           </div>
+
+          <router-link
+            to="/dashboard"
+            class="bg-gold hover:bg-white text-navy px-4 py-1.5 rounded text-sm font-bold transition shadow-sm"
+          >
+            แดชบอร์ด
+          </router-link>
+
           <button
             @click="handleLogout"
             class="border border-white/30 hover:bg-white/10 text-white px-3 py-1.5 rounded text-sm transition"
@@ -219,6 +227,15 @@
               />
               <span class="text-white">{{ userData.name }}</span>
             </div>
+
+            <router-link
+              to="/dashboard"
+              @click="closeMenu"
+              class="w-full bg-gold hover:bg-white text-navy py-2 rounded font-bold text-center transition"
+            >
+              เข้าสู่หน้าแดชบอร์ด
+            </router-link>
+
             <button
               @click="handleLogout"
               class="w-full bg-red-500/80 hover:bg-red-500 text-white py-2 rounded font-bold transition"

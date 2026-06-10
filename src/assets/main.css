@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+
 @theme {
   /* กำหนดโทนสีกรมท่า (Primary) */
   --color-navy: #0f172a;
@@ -61,4 +62,61 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+}
+@layer utilities {
+  /* =========================================
+     1. เอฟเฟกต์เรืองแสงและพองยุบ (Pulse Glow) 
+  ========================================= */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px 5px rgba(234, 179, 8, 0.3); /* สีทองจาง */
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 40px 15px rgba(234, 179, 8, 0.6); /* สีทองเข้ม */
+      transform: scale(1.05);
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 4s ease-in-out infinite;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.05); /* พื้นหลังใสบางๆ */
+  }
+
+  /* =========================================
+     2. เอฟเฟกต์แสงพาดผ่าน (Highlight Sweep)
+  ========================================= */
+  .highlight-sweep-wrapper {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    overflow: hidden;
+    z-index: 20;
+    pointer-events: none; /* เพื่อไม่ให้ตัวแสงไปบล็อกการคลิกรูปภาพ */
+  }
+
+  .highlight-sweep-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    /* ไล่สีแสงสีขาวกึ่งโปร่งใส */
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg); /* เอียงเส้นแสง */
+    animation: sweep 5s infinite; /* วิ่งพาดผ่านทุกๆ 5 วินาที */
+  }
+
+  @keyframes sweep {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; } /* หน่วงเวลาไว้ช่วงนึงก่อนจะเริ่มวิ่งใหม่ */
+  }
 }

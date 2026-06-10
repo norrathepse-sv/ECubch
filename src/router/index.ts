@@ -63,6 +63,16 @@ const router = createRouter({
   path:'/dashboard',
   name:'dashboard',
   component: () => import('@/views/DashboardView.vue')
+},
+{
+  path:'/sops',
+  name:'sops',
+  component: () => import('@/components/AppSop.vue')
+},
+{
+  path:'/Review',
+  name:'review',
+  component: () => import('@/components/ReviewProcess.vue')
 }
   
       

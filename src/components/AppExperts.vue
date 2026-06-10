@@ -8,12 +8,12 @@
         text-color="text-[#1d1d1f]"
         primary-link="/meeting/app-meeting-list"
       >
-        <template #visual>
+        <!-- <template #visual>
           <img
             src="/images/Experts/books-library.jpg"
             class="mx-auto w-[50%] hover:translate-y-[-10px] transition-transform duration-500"
           />
-        </template>
+        </template> -->
       </GridCard>
 
       <GridCard
@@ -23,9 +23,9 @@
         text-color="text-[#1d1d1f]"
         primary-link="/downloads"
       >
-        <template #visual>
+        <!-- <template #visual>
           <img src="/images/Experts/user-group.jpg" class="mx-auto w-[50%]" />
-        </template>
+        </template> -->
       </GridCard>
 
       <GridCard
@@ -33,9 +33,9 @@
         subtitle="(Standard Operating Procedures) ฉบับที่ 3"
         bg-color="bg-gradient-to-br from-[#b3d7ee] to-[#ffffff]"
         text-color="text-[#1d1d1f]"
-        :has-secondary-btn="true"
-        primary-link="/sops/view"
-        secondary-link="/sops/download.pdf"
+        :has-secondary-btn="false"
+        primary-link="/sops"
+        secondary-link="/docs/SOPsฉบับที่3.pdf"
       >
         <template #visual> </template>
       </GridCard>
@@ -45,7 +45,7 @@
         subtitle="Examption, Expedited And Full board Review"
         bg-color="bg-[#000000]"
         text-color="text-[#ffffff]"
-        primary-link="/procedures"
+        primary-link="/Review"
       >
         <template #visual> </template>
       </GridCard>
