@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import DocumentList from "@/components/DocumentList.vue";
 import DocumentModal from "@/components/DocumentModal.vue";
+import SlideUpload from "@/components/SlideUpload.vue";
 
 const router = useRouter();
 const meetings = ref<any[]>([]);
@@ -272,7 +273,7 @@ onMounted(() => {
 
 <template>
   <div class="dashboard-layout-top">
-    <header class="top-navbar">
+    <header class="top-navbar font-sans">
       <div class="nav-container">
         <div class="nav-brand">
           <img src="/images/logoUBCH.png" alt="Logo" class="brand-logo" />
@@ -302,11 +303,11 @@ onMounted(() => {
     </header>
 
     <main class="main-container">
-      <header class="content-header">
+      <header class="content-header font-sans">
         <h1>{{ currentMenuLabel }}</h1>
       </header>
 
-      <div class="content-body">
+      <div class="content-body font-sans">
         <transition name="fade" mode="out-in">
           <section v-if="activeMenu === 'dashboard'" class="space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -338,7 +339,14 @@ onMounted(() => {
                 <div class="flex justify-between items-center mb-6">
                   <h3 class="text-lg font-bold text-navy">ความเคลื่อนไหวล่าสุด</h3>
                 </div>
-                <div class="space-y-6">
+                <div v-if="isLoading" class="flex justify-center items-center py-10">
+                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
+                </div>
+
+                <div
+                  v-else-if="recentActivities.length > 0"
+                  class="max-h-[400px] overflow-y-auto pr-2 space-y-6"
+                >
                   <div v-for="(act, index) in recentActivities" :key="index" class="flex gap-4">
                     <div class="flex flex-col items-center">
                       <div class="w-3 h-3 bg-gold rounded-full"></div>
@@ -353,6 +361,7 @@ onMounted(() => {
                     </div>
                   </div>
                 </div>
+                <div v-else class="text-center py-10 text-slate-400">ยังไม่มีประวัติกิจกรรม</div>
               </div>
 
               <div class="bg-navy rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
@@ -415,13 +424,8 @@ onMounted(() => {
             />
           </section>
 
-          <section v-else-if="activeMenu === 'slides'" class="content-card">
-            <div class="slide-grid">
-              <div v-for="s in slides" :key="s.id" class="slide-box">
-                <img :src="s.url" />
-                <p>{{ s.title }}</p>
-              </div>
-            </div>
+          <section v-else-if="activeMenu === 'slides'">
+            <SlideUpload />
           </section>
         </transition>
       </div>
@@ -630,6 +634,24 @@ onMounted(() => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* สำหรับ Chrome, Safari และ Edge */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #d1d5db; /* สีเทา */
+  border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }
 
 /* Mobile Responsive */

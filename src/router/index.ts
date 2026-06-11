@@ -62,17 +62,33 @@ const router = createRouter({
 {
   path:'/dashboard',
   name:'dashboard',
-  component: () => import('@/views/DashboardView.vue')
+  component: () => import('@/views/DashboardView.vue'),
+  meta: { requiresAuth: true }
 },
 {
   path:'/sops',
   name:'sops',
-  component: () => import('@/components/AppSop.vue')
+  component: () => import('@/components/AppSop.vue'),
+  meta: { requiresAuth: true }
 },
 {
   path:'/Review',
   name:'review',
-  component: () => import('@/components/ReviewProcess.vue')
+  component: () => import('@/components/ReviewProcess.vue'),
+  meta: { requiresAuth: true }
+}
+,
+{
+  path: '/slide-image', // หรือ '/admin/slides' จะดูสื่อความหมายกว่าครับ
+  name: 'slideImage',
+  component: () => import('@/components/SlideUpload.vue'),
+  meta: { requiresAuth: true }
+},
+{
+  path: '/news/:id',
+  name: 'NewsDetail',
+  // ปรับ Path ไปยังตำแหน่งไฟล์ NewsDetail.vue ของคุณให้ถูกต้อง
+  component: () => import('@/views/NewsDetail.vue') 
 }
   
       
