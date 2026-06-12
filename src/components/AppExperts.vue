@@ -31,7 +31,7 @@
       <GridCard
         title="มาตรฐานการปฏิบัติงาน"
         subtitle="(Standard Operating Procedures) ฉบับที่ 3"
-        bg-color="bg-gradient-to-br from-[#b3d7ee] to-[#ffffff]"
+        bg-color="bg-gradient-to-br from-[#FF6600] to-[#FFCC99]"
         text-color="text-[#1d1d1f]"
         :has-secondary-btn="false"
         primary-link="/sops"

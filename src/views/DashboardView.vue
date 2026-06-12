@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import DocumentList from "@/components/DocumentList.vue";
 import DocumentModal from "@/components/DocumentModal.vue";
 import SlideUpload from "@/components/SlideUpload.vue";
+import UserManagement from "./Admin/UserManagement.vue";
 
 const router = useRouter();
 const meetings = ref<any[]>([]);
@@ -22,6 +23,7 @@ const menuItems = [
   { id: "meetings", label: "ตารางการประชุม", icon: "" },
   { id: "documents", label: "จัดการเอกสาร", icon: "" },
   { id: "slides", label: "ภาพสไลด์", icon: "" },
+  { id: "UserManagement", label: "ผู้ใช้ระบบ", icon: "" },
 ];
 
 // 3. ข้อมูลจำลองสำหรับหน้า Dashboard
@@ -334,63 +336,86 @@ onMounted(() => {
               </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div class="lg:col-span-2 bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
-                <div class="flex justify-between items-center mb-6">
-                  <h3 class="text-lg font-bold text-navy">ความเคลื่อนไหวล่าสุด</h3>
-                </div>
-                <div v-if="isLoading" class="flex justify-center items-center py-10">
-                  <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
-                </div>
-
-                <div
-                  v-else-if="recentActivities.length > 0"
-                  class="max-h-[400px] overflow-y-auto pr-2 space-y-6"
+            <article class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 w-full">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold text-navy">ความเคลื่อนไหวล่าสุด</h3>
+                <button
+                  @click="fetchActivities"
+                  class="text-sm text-blue-500 hover:text-blue-700 transition"
                 >
-                  <div v-for="(act, index) in recentActivities" :key="index" class="flex gap-4">
-                    <div class="flex flex-col items-center">
-                      <div class="w-3 h-3 bg-gold rounded-full"></div>
-                      <div
-                        class="w-px h-full bg-slate-200 my-1"
-                        v-if="index !== recentActivities.length - 1"
-                      ></div>
-                    </div>
-                    <div class="pb-2">
-                      <p class="text-sm font-bold text-slate-400">{{ act.time }}</p>
-                      <p class="text-navy font-medium">{{ act.text }}</p>
-                    </div>
+                  🔄 รีเฟรช
+                </button>
+              </div>
+
+              <div v-if="isLoading" class="flex justify-center items-center py-10">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
+              </div>
+
+              <div
+                v-else-if="recentActivities.length > 0"
+                class="max-h-[400px] overflow-y-auto pr-2 space-y-6"
+              >
+                <div v-for="(act, index) in recentActivities" :key="index" class="flex gap-4">
+                  <div class="flex flex-col items-center">
+                    <div
+                      class="w-3 h-3 rounded-full"
+                      :class="{
+                        'bg-green-500': act.action === 'login_success',
+                        'bg-red-500': act.action === 'login_failed',
+                        'bg-gold': !['login_success', 'login_failed'].includes(act.action),
+                      }"
+                    ></div>
+                    <div
+                      class="w-px h-full bg-slate-200 my-1"
+                      v-if="index !== recentActivities.length - 1"
+                    ></div>
+                  </div>
+                  <div class="pb-2">
+                    <p class="text-sm font-bold text-slate-400">{{ act.time }}</p>
+                    <p class="text-navy font-medium mt-1">{{ act.text }}</p>
+
+                    <button
+                      v-if="act.action === 'login_failed' && act.uid"
+                      @click="copyToClipboard(act.uid)"
+                      class="mt-2 text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-full border border-red-100 hover:bg-red-100 transition-colors flex items-center gap-1"
+                    >
+                      <span>📋 คัดลอก UID เพื่อเพิ่มสิทธิ์</span>
+                    </button>
                   </div>
                 </div>
-                <div v-else class="text-center py-10 text-slate-400">ยังไม่มีประวัติกิจกรรม</div>
               </div>
 
-              <div class="bg-navy rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
-                <div
-                  class="absolute -top-10 -right-10 w-32 h-32 bg-gold/20 rounded-full blur-2xl"
-                ></div>
-                <h3 class="text-lg font-bold text-gold mb-6 relative z-10">เมนูด่วน</h3>
-                <div class="space-y-3 relative z-10">
-                  <button
-                    @click="activeMenu = 'documents'"
-                    class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
-                  >
-                    <span>📤 อัปโหลดเอกสารใหม่</span><span>→</span>
-                  </button>
-                  <button
-                    @click="activeMenu = 'meetings'"
-                    class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
-                  >
-                    <span>📅 จัดตารางประชุม</span><span>→</span>
-                  </button>
-                  <button
-                    @click="activeMenu = 'slides'"
-                    class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
-                  >
-                    <span>📽️ จัดการสไลด์</span><span>→</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+              <div v-else class="text-center py-10 text-slate-400">ยังไม่มีประวัติกิจกรรม</div>
+            </article>
+
+            <!-- <aside class="bg-navy rounded-3xl shadow-lg p-8 text-white relative overflow-hidden">
+  <div class="absolute -top-10 -right-10 w-32 h-32 bg-gold/20 rounded-full blur-2xl"></div>
+  
+  <h3 class="text-lg font-bold text-gold mb-6 relative z-10">เมนูด่วน</h3>
+  
+  <nav class="space-y-3 relative z-10">
+    <button
+      @click="activeMenu = 'documents'"
+      class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
+    >
+      <span>📤 อัปโหลดเอกสารใหม่</span><span>→</span>
+    </button>
+    
+    <button
+      @click="activeMenu = 'meetings'"
+      class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
+    >
+      <span>📅 จัดตารางประชุม</span><span>→</span>
+    </button>
+    
+    <button
+      @click="activeMenu = 'slides'"
+      class="w-full flex items-center justify-between bg-white/10 hover:bg-gold hover:text-navy px-4 py-3 rounded-xl transition-colors font-medium"
+    >
+      <span>📽️ จัดการสไลด์</span><span>→</span>
+    </button>
+  </nav>
+</aside> -->
           </section>
 
           <section v-else-if="activeMenu === 'meetings'" class="content-card">
@@ -426,6 +451,10 @@ onMounted(() => {
 
           <section v-else-if="activeMenu === 'slides'">
             <SlideUpload />
+          </section>
+
+          <section v-else-if="activeMenu === 'UserManagement'">
+            <UserManagement />
           </section>
         </transition>
       </div>

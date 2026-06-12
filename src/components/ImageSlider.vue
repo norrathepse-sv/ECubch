@@ -82,7 +82,7 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden bg-transparent space-y-4 mb-16 group flex items-center"
+    class="relative w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden bg-transparent space-y-0 mb-16 group flex items-center"
     @mouseenter="pauseAutoPlay"
     @mouseleave="startAutoPlay"
     aria-roledescription="carousel"

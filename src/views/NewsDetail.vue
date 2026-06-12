@@ -85,7 +85,7 @@ onMounted(() => {
           <a href="#" class="text-gold hover:text-yellow-600 transition">{{ article.category }}</a>
         </nav>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div class="grid grid-cols-1 gap-10">
           <article
             class="lg:col-span-8 bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100"
           >
@@ -194,7 +194,7 @@ onMounted(() => {
             </div>
           </article>
 
-          <aside class="lg:col-span-4 space-y-8">
+          <!-- <aside class="lg:col-span-4 space-y-8">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
               <h3 class="text-xl font-bold text-navy mb-4 pb-2 border-b-2 border-gold inline-block">
                 ข่าวที่น่าสนใจ
@@ -220,7 +220,7 @@ onMounted(() => {
                 </a>
               </div>
             </div>
-          </aside>
+          </aside> -->
         </div>
       </div>
 

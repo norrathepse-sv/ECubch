@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 // 1. กำหนด Interface ให้ถูกต้อง (news_id ต้องรองรับ null)
@@ -61,6 +61,62 @@ const fetchNews = async () => {
     newsList.value = res.data;
   } catch (e) {
     console.error("ดึงข่าวไม่สำเร็จ");
+  }
+};
+
+const groupedSlides = computed(() => {
+  const groups: Record<string, any> = {};
+
+  slideList.value.forEach((slide) => {
+    // กำหนด Key: ถ้ามี news_id ให้กรุ๊ปด้วย news_id ถ้าไม่มีให้กรุ๊ปด้วย title ถ้าไม่มีอีกให้แยกเดี่ยว
+    const groupKey = slide.news_id
+      ? `news_${slide.news_id}`
+      : slide.title
+        ? `title_${slide.title}`
+        : `slide_${slide.id}`;
+
+    if (!groups[groupKey]) {
+      groups[groupKey] = {
+        key: groupKey,
+        news_id: slide.news_id,
+        title: slide.title || "ไม่มีหัวข้อ",
+        items: [],
+        cover: null,
+      };
+    }
+
+    groups[groupKey].items.push(slide);
+
+    // หารูปปกของกลุ่ม
+    if (slide.is_cover) {
+      groups[groupKey].cover = slide;
+    }
+  });
+
+  return Object.values(groups).map((group: any) => {
+    if (!group.cover && group.items.length > 0) {
+      group.cover = group.items[0];
+    }
+    return group;
+  });
+});
+
+const deleteGroup = async (items: any[]) => {
+  if (!confirm(`คุณแน่ใจหรือไม่ที่จะลบสไลด์ชุดนี้ทั้งหมด (${items.length} รูป)?`)) return;
+
+  isFetching.value = true;
+  try {
+    const token = localStorage.getItem("auth_token");
+    // วนลูปยิง API ลบทีละรูปในกลุ่ม
+    for (const item of items) {
+      await axios.delete(`http://10.180.10.71:8000/api/slides/${item.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
+    await fetchSlides();
+  } catch (error) {
+    alert("เกิดข้อผิดพลาดในการลบสไลด์บางรูป กรุณาลองใหม่");
+    await fetchSlides(); // ดึงข้อมูลมาอัปเดตเผื่อลบไปได้แค่บางส่วน
   }
 };
 
@@ -375,51 +431,98 @@ onMounted(() => {
 
     <div class="mt-12 pt-8 border-t border-slate-200">
       <h3 class="text-xl font-bold text-navy mb-6">📸 รายการภาพสไลด์ปัจจุบัน</h3>
+
       <div v-if="isFetching" class="flex justify-center py-8">
         <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
       </div>
-      <div v-else-if="slideList.length > 0" class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+
+      <div v-else-if="groupedSlides.length > 0" class="overflow-x-auto">
+        <table
+          class="w-full text-left border-collapse bg-white shadow-sm rounded-xl overflow-hidden"
+        >
           <thead>
             <tr class="bg-slate-50 text-slate-500 text-sm border-b">
-              <th class="py-3 px-4">ภาพตัวอย่าง</th>
-              <th class="py-3 px-4">ข้อมูล / หัวข้อ</th>
-              <th class="py-3 px-4">สถานะภาพ</th>
-              <th class="py-3 px-4 text-center">จัดการ</th>
+              <th class="py-4 px-6 font-semibold">ภาพหน้าปก</th>
+              <th class="py-4 px-6 font-semibold">ข้อมูล / หัวข้อ</th>
+              <th class="py-4 px-6 font-semibold">รูปทั้งหมดในชุดนี้</th>
+              <th class="py-4 px-6 text-center font-semibold">จัดการ</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="slide in slideList" :key="slide.id" class="border-b hover:bg-slate-50">
-              <td class="py-3 px-4">
-                <img :src="slide.image_url" class="w-32 h-16 object-cover rounded border" />
+            <tr
+              v-for="group in groupedSlides"
+              :key="group.key"
+              class="border-b hover:bg-slate-50 transition"
+            >
+              <td class="py-4 px-6">
+                <div class="relative inline-block">
+                  <img
+                    :src="group.cover.image_url"
+                    class="w-32 h-20 object-cover rounded-lg border shadow-sm"
+                  />
+                  <span
+                    v-if="group.items.length > 1"
+                    class="absolute -top-2 -right-2 bg-navy text-white text-xs px-2 py-1 rounded-full font-bold shadow-md"
+                  >
+                    +{{ group.items.length - 1 }}
+                  </span>
+                </div>
               </td>
-              <td class="py-3 px-4">
-                <p class="font-bold text-navy text-sm">{{ slide.title || "ไม่มีหัวข้อ" }}</p>
-                <p v-if="slide.news_id" class="text-xs text-blue-600 font-medium">
-                  ผูกกับข่าว ID: {{ slide.news_id }}
+
+              <td class="py-4 px-6">
+                <p class="font-bold text-navy text-base">{{ group.title }}</p>
+                <p
+                  v-if="group.news_id"
+                  class="text-sm text-blue-600 font-medium mt-1 inline-flex items-center gap-1 bg-blue-50 px-2 py-0.5 rounded"
+                >
+                  <i class="fa-solid fa-link text-xs"></i> ผูกกับข่าว ID: {{ group.news_id }}
                 </p>
+                <p v-else class="text-sm text-slate-400 mt-1">สไลด์ทั่วไป (ไม่ผูกข่าว)</p>
               </td>
-              <td class="py-3 px-4">
-                <span
-                  v-if="slide.is_cover"
-                  class="bg-amber-500 text-white text-xs px-3 py-1 rounded-full font-bold"
-                  >รูปปก</span
-                >
-                <span v-else class="bg-slate-100 text-slate-500 text-xs px-3 py-1 rounded-full"
-                  >ภาพประกอบ</span
-                >
+
+              <td class="py-4 px-6">
+                <div class="flex flex-wrap gap-2">
+                  <div
+                    v-for="item in group.items"
+                    :key="item.id"
+                    class="relative group cursor-pointer"
+                  >
+                    <img
+                      :src="item.image_url"
+                      class="w-12 h-12 object-cover rounded border transition group-hover:opacity-75"
+                      :class="{ 'ring-2 ring-gold border-transparent': item.is_cover }"
+                      :title="item.is_cover ? 'รูปปก' : 'ภาพประกอบ'"
+                    />
+                    <button
+                      @click.stop="deleteSlide(item.id)"
+                      class="absolute -top-1.5 -right-1.5 bg-red-500 text-white w-5 h-5 rounded-full text-[10px] hidden group-hover:flex items-center justify-center shadow-md hover:bg-red-600"
+                      title="ลบเฉพาะรูปนี้"
+                    >
+                      <i class="fa-solid fa-times"></i>
+                    </button>
+                  </div>
+                </div>
               </td>
-              <td class="py-3 px-4 text-center">
+
+              <td class="py-4 px-6 text-center">
                 <button
-                  @click="deleteSlide(slide.id)"
-                  class="text-red-500 bg-red-50 px-3 py-1 rounded-lg text-sm font-medium"
+                  @click="deleteGroup(group.items)"
+                  class="text-red-500 border border-red-200 bg-red-50 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap"
                 >
-                  ลบ
+                  <i class="fa-solid fa-trash-can mr-1"></i> ลบทั้งชุด
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div
+        v-else
+        class="text-center py-12 bg-slate-50 rounded-xl border border-dashed border-slate-300"
+      >
+        <i class="fa-solid fa-images text-4xl text-slate-300 mb-3"></i>
+        <p class="text-slate-500 font-medium">ยังไม่มีข้อมูลภาพสไลด์</p>
       </div>
     </div>
   </div>

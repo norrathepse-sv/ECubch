@@ -7,10 +7,10 @@
       <AppExperts />
       <AppFee />
     </div>
+    <ImageSlider v-if="isDataLoaded" :slides="heroSlides" :auto-play-interval="6000" />
 
     <!-- <AppSop /> -->
     <!-- <AppDownload /> -->
-    <ImageSlider v-if="isDataLoaded" :slides="heroSlides" :auto-play-interval="6000" />
   </div>
 </template>
 

@@ -89,6 +89,11 @@ const router = createRouter({
   name: 'NewsDetail',
   // ปรับ Path ไปยังตำแหน่งไฟล์ NewsDetail.vue ของคุณให้ถูกต้อง
   component: () => import('@/views/NewsDetail.vue') 
+},
+{
+  path: '/admin/users',
+  name: 'UserManagement',
+  component: () => import('../views/Admin/UserManagement.vue')
 }
   
       
