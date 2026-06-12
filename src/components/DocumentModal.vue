@@ -119,6 +119,7 @@ interface DocumentItem {
   name: string;
   size: string;
   url: string;
+  [key: string]: unknown;
 }
 
 const props = defineProps<{
@@ -129,19 +130,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["close", "save"]);
-const selectedFile = ref<File | null>(null);
-
-const handleFileChange = (e: Event) => {
-  const target = e.target as HTMLInputElement;
-  if (target.files && target.files.length > 0) {
-    selectedFile.value = target.files[0];
-
-    // ตั้งชื่อเอกสารอัตโนมัติตามชื่อไฟล์ (เผื่อย่อยเวลาพิมพ์ให้ยูสเซอร์)
-    if (!form.value.name) {
-      form.value.name = target.files[0].name.split(".").slice(0, -1).join(".");
-    }
-  }
-};
+const selectedFile = ref<File | undefined>();
 // สร้างตัวแปรเก็บข้อมูลฟอร์ม
 const form = ref<DocumentItem>({
   id: null,
@@ -149,6 +138,24 @@ const form = ref<DocumentItem>({
   size: "",
   url: "",
 });
+
+const handleFileChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+
+  if (target.files && target.files.length > 0) {
+    // ใช้ 'as File' เพื่อยืนยันคำขาดกับ TypeScript ว่าดึงค่ามาได้แน่นอน
+    const file = target.files[0] as File;
+
+    // หรืออีกวิธีที่ใช้ได้เหมือนกันคือเติมเครื่องหมายตกใจ (!)
+    // const file = target.files[0]!;
+
+    selectedFile.value = file;
+
+    if (!form.value.name) {
+      form.value.name = file.name.split(".").slice(0, -1).join(".");
+    }
+  }
+};
 
 // เช็คว่าเป็นโหมดแก้ไขหรือไม่ (ดูว่ามี id ส่งมาไหม)
 const isEditMode = computed(() => !!form.value.id);

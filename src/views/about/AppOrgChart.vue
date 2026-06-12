@@ -102,7 +102,7 @@
             v-for="mission in missions"
             :key="mission.id"
             class="relative flex flex-col items-center"
-            :class="mission.columnClass"
+            :class="(mission as any).columnClass"
           >
             <div class="relative flex flex-col items-center mb-10 w-full relative z-10">
               <div class="relative w-32 h-44 mb-4 group">
@@ -218,14 +218,24 @@ const breadcrumbList = ref([
 ]);
 // จัดการเมื่อโหลดรูปภาพไม่สำเร็จ
 const imageError = ref(false);
-const handleImageError = (event) => {
-  imageError.value = true;
-  event.target.style.display = "none";
+const handleImageError = (event: Event) => {
+  // 1. ระบุให้ชัดเจนว่า target คือ HTMLImageElement
+  const target = event.target as HTMLImageElement;
+
+  if (target) {
+    imageError.value = true;
+    target.style.display = "none";
+  }
 };
 
-const handlePortraitError = (event) => {
-  // แสดงรูป placeholder หากโหลดรูปจริงไม่สำเร็จ
-  event.target.src = "/images/portraits/placeholder.jpg"; // ตรวจสอบว่ามีไฟล์นี้จริง
+const handlePortraitError = (event: Event) => {
+  // 1. ระบุให้ชัดเจนว่า target คือ HTMLImageElement
+  const target = event.target as HTMLImageElement;
+
+  if (target) {
+    // 2. แสดงรูป placeholder
+    target.src = "/images/portraits/placeholder.jpg";
+  }
 };
 
 // --- DATA STRUCTURES (แก้ไขข้อมูลตรงนี้ได้เลย) ---

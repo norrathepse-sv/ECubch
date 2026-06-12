@@ -115,6 +115,7 @@ const deleteGroup = async (items: any[]) => {
     }
     await fetchSlides();
   } catch (error) {
+    console.error("ดึงข้อมูลสไลด์ไม่สำเร็จ:", error);
     alert("เกิดข้อผิดพลาดในการลบสไลด์บางรูป กรุณาลองใหม่");
     await fetchSlides(); // ดึงข้อมูลมาอัปเดตเผื่อลบไปได้แค่บางส่วน
   }
@@ -150,6 +151,7 @@ const deleteSlide = async (id: number) => {
     });
     await fetchSlides();
   } catch (error) {
+    console.error("ดึงข้อมูลสไลด์ไม่สำเร็จ:", error);
     alert("ลบไม่สำเร็จ กรุณาลองใหม่");
   }
 };

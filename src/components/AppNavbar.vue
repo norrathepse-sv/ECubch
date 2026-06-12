@@ -137,7 +137,7 @@
           </router-link>
 
           <button
-            @click="handleLogout"
+            @click="() => handleLogout()"
             class="border border-white/30 hover:bg-white/10 text-white px-3 py-1.5 rounded text-sm transition"
           >
             Logout
@@ -237,7 +237,7 @@
             </router-link>
 
             <button
-              @click="handleLogout"
+              @click="() => handleLogout()"
               class="w-full bg-red-500/80 hover:bg-red-500 text-white py-2 rounded font-bold transition"
             >
               ออกจากระบบ

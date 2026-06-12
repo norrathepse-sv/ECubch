@@ -1,23 +1,66 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { useRouter } from "vue-router";
+
+// (หากไม่ได้ใช้ Component หรือ Interface ไหน แนะนำให้คอมเมนต์หรือลบออกตอน Build ครับ)
 import DocumentList from "@/components/DocumentList.vue";
 import DocumentModal from "@/components/DocumentModal.vue";
 import SlideUpload from "@/components/SlideUpload.vue";
 import UserManagement from "./Admin/UserManagement.vue";
 
+// --- การสร้าง Interface เพื่อเลี่ยงการใช้ any ---
+interface UserData {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface Activity {
+  action: string;
+  time: string;
+  text: string;
+  uid?: string;
+}
+
+interface MeetingData {
+  id?: number;
+  date?: string;
+  [key: string]: unknown; // อนุญาตให้มี key อื่นๆ ได้
+}
+
+interface DocData {
+  id: number;
+  name: string;
+  size: string;
+  url: string;
+}
+
+interface DocFormData {
+  id?: number;
+  name: string;
+  file?: File;
+}
+
 const router = useRouter();
-const meetings = ref<any[]>([]);
+
+// 💡 แนะนำ: ใน Production ควรเปลี่ยน API_BASE_URL ไปดึงจาก .env แทนการฝัง IP ตรงๆ
+const API_BASE_URL = "http://10.180.10.71:8000/api";
+
+const meetings = ref<MeetingData[]>([]);
 const uploadProgress = ref(0);
 const isUploading = ref(false);
 const isLoading = ref(true);
 
+const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text).then(() => {
+    alert("คัดลอก UID เรียบร้อยแล้ว");
+  });
+};
+
 // --- ระบบเมนู ---
-// 1. เพิ่ม 'dashboard' เป็นค่าเริ่มต้นของเมนู
 const activeMenu = ref("dashboard");
 
-// 2. เพิ่มเมนู 'หน้าแรก' เข้าไปที่ตำแหน่งบนสุด
 const menuItems = [
   { id: "dashboard", label: "ภาพรวมระบบ", icon: "" },
   { id: "meetings", label: "ตารางการประชุม", icon: "" },
@@ -26,7 +69,6 @@ const menuItems = [
   { id: "UserManagement", label: "ผู้ใช้ระบบ", icon: "" },
 ];
 
-// 3. ข้อมูลจำลองสำหรับหน้า Dashboard
 const dashboardStats = ref([
   {
     title: "โครงการรอพิจารณา",
@@ -37,7 +79,7 @@ const dashboardStats = ref([
   },
   {
     title: "วันประชุมรอบถัดไป",
-    value: "กำลังโหลด...", // ค่าเริ่มต้นระหว่างรอ API
+    value: "กำลังโหลด...",
     unit: "",
     icon: "📅",
     color: "bg-blue-100 text-blue-600",
@@ -58,37 +100,38 @@ const dashboardStats = ref([
   },
 ]);
 
-const recentActivities = ref([]);
+const recentActivities = ref<Activity[]>([]);
 
 const currentMenuLabel = computed(() => {
   return menuItems.find((i) => i.id === activeMenu.value)?.label;
 });
 
 // --- ข้อมูลจำลอง/Data ---
-const slides = ref([
-  {
-    id: 1,
-    title: "วาระที่ 1: รายงานการประชุมครั้งที่แล้ว",
-    url: "https://placehold.co/600x400?text=Slide+1",
-  },
-  {
-    id: 2,
-    title: "วาระที่ 2: เรื่องเสนอเพื่อพิจารณา",
-    url: "https://placehold.co/600x400?text=Slide+2",
-  },
-  { id: 3, title: "วาระที่ 3: เรื่องอื่นๆ", url: "https://placehold.co/600x400?text=Slide+3" },
-]);
+// const slides = ref([
+//   {
+//     id: 1,
+//     title: "วาระที่ 1: รายงานการประชุมครั้งที่แล้ว",
+//     url: "https://placehold.co/600x400?text=Slide+1",
+//   },
+//   {
+//     id: 2,
+//     title: "วาระที่ 2: เรื่องเสนอเพื่อพิจารณา",
+//     url: "https://placehold.co/600x400?text=Slide+2",
+//   },
+//   { id: 3, title: "วาระที่ 3: เรื่องอื่นๆ", url: "https://placehold.co/600x400?text=Slide+3" },
+// ]);
 
-const documents = ref([]);
+const documents = ref<DocData[]>([]);
 const isDocModalOpen = ref(false);
-const editingDoc = ref<any>(null);
+const editingDoc = ref<DocData | null>(null);
 
-// --- Functions (Logic เดิม) ---
+// --- Functions ---
 const handleAddDoc = () => {
   editingDoc.value = null;
   isDocModalOpen.value = true;
 };
-const handleEditDoc = (doc: any) => {
+
+const handleEditDoc = (doc: DocData) => {
   editingDoc.value = doc;
   isDocModalOpen.value = true;
 };
@@ -97,26 +140,27 @@ const handleDeleteDoc = async (id: number) => {
   if (confirm("คุณแน่ใจหรือไม่ที่จะลบเอกสารนี้?")) {
     try {
       const token = localStorage.getItem("auth_token");
-      await axios.delete(`http://10.180.10.71:8000/api/documents/${id}`, {
+      await axios.delete(`${API_BASE_URL}/documents/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchDocuments();
     } catch (error) {
+      console.error(error);
       alert("ลบไม่สำเร็จ");
     }
   }
 };
 
-const saveDocument = async (formData: any) => {
+const saveDocument = async (formData: DocFormData) => {
   const token = localStorage.getItem("auth_token");
   const data = new FormData();
   data.append("name", formData.name);
   if (formData.file) data.append("file", formData.file);
 
-  let url = "http://10.180.10.71:8000/api/documents";
+  let url = `${API_BASE_URL}/documents`;
   if (formData.id) {
     data.append("_method", "PUT");
-    url = `http://10.180.10.71:8000/api/documents/${formData.id}`;
+    url = `${API_BASE_URL}/documents/${formData.id}`;
   }
 
   try {
@@ -139,15 +183,22 @@ const saveDocument = async (formData: any) => {
 const fetchDocuments = async () => {
   const token = localStorage.getItem("auth_token");
   try {
-    const response = await axios.get("http://10.180.10.71:8000/api/documents", {
+    const response = await axios.get(`${API_BASE_URL}/documents`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    documents.value = response.data;
+    documents.value = response.data.map((doc: any) => ({
+      id: Number(doc.id),
+      name: String(doc.name),
+      size: String(doc.size ?? ""),
+      url: String(doc.url ?? ""),
+    }));
 
-    // 🔥 อัปเดตตัวเลขจำนวนเอกสารใน Dashboard Stats อัตโนมัติ!
-    dashboardStats.value[2].value = response.data.length.toString();
-  } catch (e: any) {
-    if (e.response && e.response.status === 401) {
+    if (dashboardStats.value && dashboardStats.value[2]) {
+      dashboardStats.value[2].value = response.data.length.toString();
+    }
+  } catch (e: unknown) {
+    // ใช้งาน isAxiosError เพื่อป้องกัน Error จาก Type 'unknown'
+    if (isAxiosError(e) && e.response?.status === 401) {
       router.push("/login");
     }
     console.error("โหลดเอกสารไม่สำเร็จ:", e);
@@ -163,42 +214,34 @@ const fetchData = async () => {
   }
 
   try {
-    const meetingsResponse = await axios.get("http://10.180.10.71:8000/api/meetings", {
+    const meetingsResponse = await axios.get(`${API_BASE_URL}/meetings`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    // เก็บข้อมูลลงตาราง (ของเดิม)
     meetings.value = meetingsResponse.data;
 
-    // 🔥 ดึงวันที่ประชุมรอบถัดไปมาใส่ใน Dashboard Stats
     if (meetings.value.length > 0) {
-      // 1. สร้างตัวแปรวันปัจจุบัน และตั้งเวลาเป็นเที่ยงคืน (00:00:00) เพื่อเทียบแค่วันที่
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
       let upcomingMeeting = null;
 
-      // 2. วนลูปเช็ควันที่ประชุมแต่ละรอบ
       for (const m of meetings.value) {
         if (!m.date) continue;
 
         const parts = m.date.split("/");
         if (parts.length === 3) {
-          const day = parseInt(parts[0], 10);
-          const month = parseInt(parts[1], 10) - 1; // JS นับเดือนเริ่มที่ 0 (0 = ม.ค.)
-          const yearAD = parseInt(parts[2], 10) - 543; // แปลง พ.ศ. เป็น ค.ศ.
-
+          const day = parseInt(parts[0] ?? "0", 10);
+          const month = parseInt(parts[1] ?? "0", 10) - 1;
+          const yearAD = parseInt(parts[2] ?? "0", 10) - 543;
           const meetingDate = new Date(yearAD, month, day);
 
-          // 3. ถ้าวันที่ประชุม "มากกว่าหรือเท่ากับ" วันนี้ ให้ถือเป็นรอบถัดไป
           if (meetingDate >= today) {
             upcomingMeeting = m;
-            break; // เจออันแรกที่ยังไม่ถึง (หรือคือวันนี้) ให้หยุดลูปทันที
+            break;
           }
         }
       }
 
-      // 4. นำรอบถัดไปที่หาเจอมาแสดงผล
       if (upcomingMeeting) {
         const thaiMonths = [
           "",
@@ -215,23 +258,21 @@ const fetchData = async () => {
           "พ.ย.",
           "ธ.ค.",
         ];
-
-        const dateParts = upcomingMeeting.date.split("/");
+        const dateParts = upcomingMeeting.date!.split("/");
         const day = dateParts[0];
-        const monthIndex = parseInt(dateParts[1], 10);
+        const monthIndex = parseInt(dateParts[1]?.slice(0, 2) ?? "0");
         const year = dateParts[2];
         const monthName = thaiMonths[monthIndex] || "";
 
-        dashboardStats.value[1].value = `${day} ${monthName}`;
-        dashboardStats.value[1].unit = year;
+        dashboardStats.value[1]!.value = `${day} ${monthName}`;
+        dashboardStats.value[1]!.unit = year ?? "";
       } else {
-        // ถ้าวนลูปจนจบแล้วไม่เจอแสดงว่า "ผ่านไปหมดแล้วทุกรอบ"
-        dashboardStats.value[1].value = "-";
-        dashboardStats.value[1].unit = "สิ้นสุดรอบการประชุม";
+        dashboardStats.value[1]!.value = "-";
+        dashboardStats.value[1]!.unit = "สิ้นสุดรอบการประชุม";
       }
     } else {
-      dashboardStats.value[1].value = "-";
-      dashboardStats.value[1].unit = "ไม่มีข้อมูล";
+      dashboardStats.value[1]!.value = "-";
+      dashboardStats.value[1]!.unit = "ไม่มีข้อมูล";
     }
   } catch (error) {
     console.error("ไม่สามารถดึงข้อมูลระบบได้:", error);
@@ -245,21 +286,18 @@ const fetchData = async () => {
 const fetchActivities = async () => {
   const token = localStorage.getItem("auth_token");
 
-  // 🔥 ตรวจสอบก่อนว่า Token มีค่าจริงๆ หรือไม่
   if (!token) {
-    console.error("ไม่มี Token ในระบบ!");
     router.push("/login");
     return;
   }
 
   try {
-    const res = await axios.get("http://10.180.10.71:8000/api/activities", {
+    const res = await axios.get(`${API_BASE_URL}/activities`, {
       headers: {
-        Authorization: `Bearer ${token}`, // ต้องมีคำว่า "Bearer " นำหน้า
-        Accept: "application/json", // แนะนำให้ใส่ตัวนี้ด้วยเพื่อบังคับให้ Laravel ตอบกลับเป็น JSON
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
       },
     });
-    console.log(localStorage.getItem("auth_token"));
     recentActivities.value = res.data;
   } catch (e) {
     console.error("ดึงข้อมูลไม่สำเร็จ:", e);

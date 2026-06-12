@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter } from "vue-router";
 
 interface Slide {
+  id: number;
   image: string;
   title?: string;
   subtitle?: string;
